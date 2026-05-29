@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const BoutonFavori = ({ id, titre, type }) => {
+const BoutonFavori = ({ id, titre, type, artisteNom, artisteId }) => {
     const [estFavori, setEstFavori] = useState(false);
 
     useEffect(() => {
@@ -14,7 +14,7 @@ const BoutonFavori = ({ id, titre, type }) => {
         if (estFavori) {
             favoris = favoris.filter(f => f.id !== id);
         } else {
-            favoris.push({ id, titre, type });
+            favoris.push({ id, titre, type, artisteNom, artisteId });
         }
         localStorage.setItem('favoris', JSON.stringify(favoris));
         setEstFavori(!estFavori);

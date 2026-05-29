@@ -3,9 +3,9 @@ import { getActualitesArtiste } from '../appels_api_backend/client_api';
 
 const panelStyle = {
     background: 'var(--card-bg)',
-    borderRadius: '1rem',
-    padding: '1.5rem',
-    marginBottom: '2rem',
+    borderRadius: '1.25rem', /* Assorti aux coins de l'en-tête artiste */
+    padding: '0.8rem 1.5rem', /* Ultra-compact */
+    marginBottom: '1.25rem', /* Transition très serrée */
     boxShadow: 'var(--shadow)',
     backdropFilter: 'blur(10px)',
     WebkitBackdropFilter: 'blur(10px)',
@@ -72,8 +72,8 @@ const PanneauActualites = ({ nomArtiste }) => {
             >
                 <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
                     <div className="live-dot pulse-animation" style={liveDotStyle}></div>
-                    <h3 style={{margin: 0, fontSize: '1.4rem', fontFamily: "'Playfair Display', serif", fontStyle: 'italic', letterSpacing: '0.5px'}}>
-                        À la une pour {nomArtiste}
+                    <h3 className="news-title">
+                        <span className="premium-gradient-text">À la une pour {nomArtiste}</span>
                     </h3>
                 </div>
                 <div className="pulse-animation" style={{color: '#ff3c3c', fontSize: '1.2rem', transform: ouvert ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease'}}>

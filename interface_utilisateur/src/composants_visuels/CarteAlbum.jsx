@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import BoutonFavori from './BoutonFavori';
 
-const CarteAlbum = ({ album, onClick }) => {
+const CarteAlbum = ({ album, onClick, artisteNom, artisteId }) => {
     const [imgErreur, setImgErreur] = useState(false);
 
     return (
         <div className="card album-card" onClick={() => onClick && onClick(album)}>
-            <div className="card-top-right">
-                <BoutonFavori id={album.id} titre={album.titre} type="album" />
+            <div className="card-bottom-right">
+                <BoutonFavori id={album.id} titre={album.titre} type="album" artisteNom={artisteNom} artisteId={artisteId} />
             </div>
             <div className="album-cover-container">
                 {!imgErreur && album.pochette_url ? (

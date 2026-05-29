@@ -4,7 +4,7 @@ import BoutonFavori from './BoutonFavori';
 const CarteArtiste = ({ artiste, onClick }) => {
     return (
         <div className="card" onClick={() => onClick && onClick(artiste)}>
-            <div className="card-top-right">
+            <div className="card-bottom-right">
                 <BoutonFavori id={artiste.id} titre={artiste.nom} type="artiste" />
             </div>
             <h3 className="card-title">{artiste.nom}</h3>

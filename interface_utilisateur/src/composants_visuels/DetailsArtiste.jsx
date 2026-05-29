@@ -7,7 +7,7 @@ import BoutonFavori from './BoutonFavori';
 import LecteurYoutube from './LecteurYoutube';
 import PanneauActualites from './PanneauActualites';
 
-const DetailsArtiste = ({ artiste, onRetour }) => {
+const DetailsArtiste = ({ artiste, onRetour, albumASelectionnerInitial, onAlbumSelectionneVisualise }) => {
     const [albums, setAlbums] = useState([]);
     const [chargement, setChargement] = useState(true);
     const [erreur, setErreur] = useState(null);
@@ -102,6 +102,24 @@ const DetailsArtiste = ({ artiste, onRetour }) => {
         fetchWikipediaImage();
     }, [artiste.id, artiste.nom]);
 
+    // Ouvrir automatiquement l'album favori sélectionné initialement et faire défiler jusqu'à sa tracklist
+    useEffect(() => {
+        if (albumASelectionnerInitial && albums.length > 0) {
+            const albumCible = albums.find(a => a.id === albumASelectionnerInitial.id) || 
+                               albums.find(a => a.titre.toLowerCase() === albumASelectionnerInitial.titre.toLowerCase());
+            
+            if (albumCible) {
+                // Déclencher le clic pour ouvrir et charger les musiques
+                handleAlbumClick(albumCible);
+                
+                // Signaler à l'accueil que l'album a été traité
+                if (onAlbumSelectionneVisualise) {
+                    onAlbumSelectionneVisualise();
+                }
+            }
+        }
+    }, [albums, albumASelectionnerInitial]);
+
     const getIconForUrl = (url) => {
         if (url.includes('wikipedia')) return '📚 Wikipédia';
         if (url.includes('youtube')) return '📺 YouTube';
@@ -121,7 +139,16 @@ const DetailsArtiste = ({ artiste, onRetour }) => {
             
             <div className="artist-header">
                 <div className="header-top">
-                    <h2 className="artist-name">{artiste.nom}</h2>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        {bgUrl && (
+                            <img 
+                                src={bgUrl} 
+                                alt={artiste.nom} 
+                                className="artist-mini-avatar"
+                            />
+                        )}
+                        <h2 className="artist-name">{artiste.nom}</h2>
+                    </div>
                     <BoutonFavori id={artiste.id} titre={artiste.nom} type="artiste" />
                 </div>
                 
@@ -160,8 +187,16 @@ const DetailsArtiste = ({ artiste, onRetour }) => {
             <PanneauActualites nomArtiste={artiste.nom} />
 
             <div className="albums-section">
-                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem'}}>
-                    <h3 className="albums-title">Discographie <span className="albums-count">({albums.length} albums)</span></h3>
+                <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '1.5rem'}}>
+                    <h3 className="albums-title">
+                        <svg className="disc-icon" viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '12px', color: '#ec4899', verticalAlign: 'text-bottom'}}>
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <circle cx="12" cy="12" r="1" fill="#ec4899"></circle>
+                        </svg>
+                        <span className="premium-gradient-text">Discographie</span> 
+                        <span className="albums-count">({albums.length} albums)</span>
+                    </h3>
                 </div>
                 
                 {chargement && <AnimationChargement />}
@@ -173,6 +208,23 @@ const DetailsArtiste = ({ artiste, onRetour }) => {
 
                 {!chargement && !erreur && albums.length > 0 && (
                     <div className="albums-carousel-container">
+                        {/* Bouton retour positionné de manière relative au carousel pour s'adapter à l'ouverture des actualités */}
+                        <button 
+                            className="carousel-btn up-arrow-btn" 
+                            onClick={onRetour} 
+                            aria-label="Retour à la recherche" 
+                            title="Nouvelle recherche"
+                            style={{
+                                position: 'absolute',
+                                top: '-0.6rem',
+                                left: '50%',
+                                marginLeft: '-25px',
+                                zIndex: 10,
+                                transform: 'none'
+                            }}
+                        >
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                        </button>
                         <button className="carousel-btn prev-btn" onClick={scrollLeft} aria-label="Défiler à gauche">❮</button>
                         
                         <div className="albums-carousel" ref={carouselRef} onScroll={handleScroll}>
@@ -187,7 +239,12 @@ const DetailsArtiste = ({ artiste, onRetour }) => {
 
                                 return (
                                     <div key={album.id} className={`carousel-item ${positionClass}`}>
-                                        <CarteAlbum album={album} onClick={handleAlbumClick} />
+                                        <CarteAlbum 
+                                            album={album} 
+                                            onClick={handleAlbumClick} 
+                                            artisteNom={artiste.nom}
+                                            artisteId={artiste.id}
+                                        />
                                     </div>
                                 );
                             })}

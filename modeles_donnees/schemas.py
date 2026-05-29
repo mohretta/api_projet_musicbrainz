@@ -22,6 +22,7 @@ class Album(BaseModel):
     date_sortie: Optional[str] = None
     type: Optional[str] = None
     pochette_url: Optional[str] = None
+    artiste: Optional[str] = None
 
 class Chanson(BaseModel):
     id: str

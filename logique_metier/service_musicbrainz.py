@@ -29,7 +29,23 @@ async def rechercher_album(titre: str):
     data = await faire_requete("/release-group/", {"query": f"releasegroup:{titre}"})
     if not data or not data.get("release-groups"):
         return []
-    return [{"id": a["id"], "titre": a["title"], "type": a.get("primary-type"), "date_sortie": a.get("first-release-date"), "pochette_url": f"http://coverartarchive.org/release-group/{a['id']}/front-250"} for a in data["release-groups"][:10]]
+    
+    albums = []
+    for a in data["release-groups"][:10]:
+        artiste_nom = None
+        credits = a.get("artist-credit", [])
+        if credits and len(credits) > 0:
+            artiste_nom = credits[0].get("artist", {}).get("name")
+            
+        albums.append({
+            "id": a["id"],
+            "titre": a["title"],
+            "type": a.get("primary-type"),
+            "date_sortie": a.get("first-release-date"),
+            "pochette_url": f"http://coverartarchive.org/release-group/{a['id']}/front-250",
+            "artiste": artiste_nom
+        })
+    return albums
 
 async def rechercher_chanson(titre: str):
     data = await faire_requete("/recording/", {"query": f"recording:{titre}"})

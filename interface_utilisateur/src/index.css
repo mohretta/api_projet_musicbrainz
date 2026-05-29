@@ -18,6 +18,25 @@
   --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
 }
 
+/* --- TRADEMARK --- */
+.trademark {
+  position: absolute;
+  bottom: 1rem;
+  left: 1.5rem;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Dancing Script', cursive;
+  pointer-events: none;
+  opacity: 0.8;
+  filter: drop-shadow(0 2px 4px rgba(236, 72, 153, 0.3));
+}
+
+[data-theme='light'] .trademark {
+  opacity: 0.9;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -61,6 +80,43 @@ body {
 @keyframes fadeInApp {
   from { opacity: 0; filter: blur(10px); }
   to { opacity: 1; filter: blur(0); }
+}
+
+@keyframes slideInBottom {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideOutBottom {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(100px); }
+}
+
+@keyframes slideInTop {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.details-wrapper {
+  width: 100%;
+}
+
+.slide-in-bottom {
+  animation: slideInBottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.slide-out-bottom {
+  animation: slideOutBottom 0.4s ease forwards;
+}
+
+.slide-in-top {
+  animation: slideInTop 0.5s ease forwards;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
 }
 
 .app-container {
@@ -333,24 +389,24 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--card-border);
-  border-radius: 1.5rem;
-  padding: 2rem;
-  margin-bottom: 2rem;
+  border-radius: 1.25rem; /* Coins un peu plus serrés et modernes */
+  padding: 0.8rem 1.5rem; /* Ultra-compact */
+  margin-bottom: 1.25rem; /* Transition très serrée */
   box-shadow: var(--shadow);
 }
 
 .artist-header .artist-name {
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  font-size: 3.5rem;
+  font-size: 2rem; /* Taille compacte et très élégante */
   font-weight: 700;
-  margin-bottom: 0.5rem;
-  letter-spacing: 1px;
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.5px;
   /* Light mode: dark gradient */
   background: linear-gradient(135deg, #1e293b, #6366f1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  text-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
 
 [data-theme='dark'] .artist-header .artist-name {
@@ -358,7 +414,7 @@ body {
   background: linear-gradient(135deg, #ffffff, #a5b4fc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
 .artist-bg {
@@ -379,18 +435,52 @@ body {
 
 .artist-header .tags {
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
-  margin-bottom: 1rem;
+  margin-bottom: 0; /* Évite tout espace vide superflu si aucun autre bloc n'est affiché */
 }
 
 .albums-title {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem;
+}
+
+.news-title {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem; /* Plus compact et proportionné */
+}
+
+.premium-gradient-text {
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  font-size: 2.2rem;
-  font-weight: 400;
-  margin: 0;
+  font-weight: 700;
   letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #1e293b, #6366f1);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 1px 5px rgba(0,0,0,0.05);
+  display: inline-block;
+}
+
+[data-theme='dark'] .premium-gradient-text {
+  background: linear-gradient(135deg, #ffffff, #a5b4fc);
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.disc-icon {
+  animation: spinDisc 8s linear infinite;
+  filter: drop-shadow(0 0 5px rgba(236, 72, 153, 0.4));
+}
+
+@keyframes spinDisc {
+  100% { transform: rotate(360deg); }
 }
 
 .albums-count {
@@ -398,27 +488,55 @@ body {
   font-style: normal;
   font-size: 1rem;
   font-weight: 300;
-  opacity: 0.5;
-  margin-left: 0.5rem;
+  opacity: 0.6;
+  margin-left: 0.75rem;
   vertical-align: middle;
+  background: none;
+  -webkit-background-clip: border-box;
+  -webkit-text-fill-color: var(--text-color);
+  text-shadow: none;
 }
 
 /* Nouvelles fonctionnalités */
 .fav-btn {
-  background: transparent;
-  border: none;
-  font-size: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem; /* Plus petit et plus chic */
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   padding: 0;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-.fav-btn:hover {
-  transform: scale(1.2);
+
+[data-theme='light'] .fav-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.fav-btn:hover, .fav-btn.active {
+  transform: scale(1.15) translateY(-2px);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 15px rgba(236, 72, 153, 0.3); /* Glow élégant */
+  border-color: rgba(236, 72, 153, 0.5);
 }
 
 .card-top-right {
   position: absolute;
   top: 1rem;
+  right: 1rem;
+  z-index: 2;
+}
+
+.card-bottom-right {
+  position: absolute;
+  bottom: 1rem;
   right: 1rem;
   z-index: 2;
 }
@@ -470,8 +588,8 @@ body {
 
 .artist-links {
   display: flex;
-  gap: 1rem;
-  margin: 1rem 0;
+  gap: 0.75rem;
+  margin: 0.75rem 0 0 0; /* Uniquement marge supérieure */
   flex-wrap: wrap;
 }
 
@@ -491,6 +609,195 @@ body {
 .artist-aliases, .artist-members {
   margin-top: 0.5rem;
   font-size: 0.95rem;
+}
+/* --- REFONTE PREMIUM : LOGO --- */
+.premium-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(236, 72, 153, 0.4));
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  transition: all 0.3s ease;
+}
+
+.premium-logo:hover {
+  filter: drop-shadow(0 4px 20px rgba(236, 72, 153, 0.7));
+  transform: scale(1.02);
+}
+
+.equalizer-icon {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 30px;
+}
+
+.equalizer-icon .bar {
+  width: 6px;
+  background: #ec4899;
+  border-radius: 3px;
+  animation: equalize 1s infinite alternate ease-in-out;
+  box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+}
+
+.equalizer-icon .bar:nth-child(1) { height: 15px; animation-delay: 0s; }
+.equalizer-icon .bar:nth-child(2) { height: 30px; animation-delay: 0.3s; }
+.equalizer-icon .bar:nth-child(3) { height: 20px; animation-delay: 0.6s; }
+
+@keyframes equalize {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1); }
+}
+
+.search-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 520px; /* Plus compact et extrêmement chic */
+  margin: 0 auto;
+}
+
+.premium-search-form {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.premium-search-input {
+  width: 100%;
+  padding: 1.5rem 4rem 1.5rem 2.5rem; /* Espace à droite pour l'icône */
+  font-size: 1.2rem;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-color);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px; /* Grande pilule */
+  outline: none;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='light'] .premium-search-input {
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.premium-search-input:focus {
+  border-color: rgba(236, 72, 153, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px rgba(236, 72, 153, 0.2), inset 0 0 15px rgba(236, 72, 153, 0.1);
+  transform: translateY(-2px);
+}
+
+[data-theme='light'] .premium-search-input:focus {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.premium-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+[data-theme='light'] .premium-search-input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* L'icône de loupe à l'intérieur */
+.premium-search-btn {
+  position: absolute;
+  right: 1.5rem;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+[data-theme='light'] .premium-search-btn {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.premium-search-btn:hover {
+  color: #ec4899;
+  transform: scale(1.1);
+}
+
+/* --- REFONTE PREMIUM : HISTORIQUE --- */
+.premium-recent-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem; /* Espacement aéré et élégant sous les chanteurs récemment recherchés */
+}
+
+.recent-label {
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+.premium-history-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem 0.5rem 1.2rem;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+[data-theme='light'] .premium-history-pill {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.premium-history-pill:hover {
+  background: rgba(236, 72, 153, 0.15);
+  border-color: #ec4899;
+  color: #ec4899;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(236, 72, 153, 0.2);
+}
+
+.delete-history-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  color: #f87171; /* Rouge doux premium */
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.delete-history-btn:hover {
+  background: #ef4444; /* Rouge vif sur hover */
+  color: white;
+  transform: scale(1.2) rotate(90deg);
 }
 
 .search-history {
@@ -690,8 +997,8 @@ body {
 }
 
 .up-arrow-btn {
-  position: fixed;
-  top: 2rem;
+  position: absolute;
+  top: -0.6rem; /* Placé de manière absolue et dynamique juste juste au-dessus du rectangle de l'album central */
   transform: none;
   /* Centrage par rapport au bouton lui-même */
   left: 50%;
@@ -708,6 +1015,21 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), max-height 0.4s ease, min-height 0.4s ease;
+  max-height: 2000px;
+}
+
+.landing-container.fade-out-scale {
+  opacity: 0;
+  transform: scale(0.96) translateY(-40px);
+  pointer-events: none;
+  min-height: 0vh;
+  max-height: 0px;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
 .landing-container .search-container {
   width: 100%;
@@ -774,4 +1096,503 @@ body {
 [data-theme='light'] .trademark {
   color: #0f172a; /* Noir en mode jour */
   text-shadow: 0 2px 5px rgba(255,255,255,1); /* Ombre blanche forte */
+}
+
+/* --- Menu Déroulant (Écran Géant) --- */
+@keyframes premiumFadeScaleIn {
+  from {
+    opacity: 0;
+    transform: translateX(calc(-50% + 150px)) scale(0.95) translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(calc(-50% + 150px)) scale(1) translateY(0);
+  }
+}
+
+.search-dropdown-container {
+  position: absolute;
+  top: calc(100% + 30px); /* Un peu plus d'espace par défaut pour respirer magnifiquement */
+  left: 50%;
+  /* Décaler légèrement vers la droite pour équilibrer avec la liste à gauche */
+  transform: translateX(calc(-50% + 150px)); 
+  width: 800px;
+  height: 500px;
+  background-image: url('/ecran_scene.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  animation: premiumFadeScaleIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 35px rgba(236, 72, 153, 0.22), 0 0 20px rgba(0, 0, 0, 0.4); /* Double ombre 3D ultra-profonde avec halo de scène rose */
+  border-radius: 10px;
+  position: relative; /* Pour positionner l'écran absolu à l'intérieur */
+  /* On enlève overflow: hidden pour que la liste puisse déborder à gauche */
+}
+
+/* La zone de projection qui recouvre exactement l'écran noir de l'image */
+/* À calibrer selon la taille de l'écran noir dans l'image (environ au centre) */
+.stage-screen-projection {
+  position: absolute;
+  top: 18%; /* Centrage vertical parfait calé sur le haut de l'écran noir */
+  left: 7%; /* Alignement horizontal complet calé sur les bords de l'écran */
+  width: 86%;
+  height: 60%; /* Hauteur totale calée sur l'écran noir pour un alignement vertical parfait */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5; /* Derrière la liste mais au-dessus de l'image */
+  pointer-events: none; /* Ne pas bloquer la souris pour les éléments en dessous */
+}
+
+.projection-content {
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 0 10px #ec4899, 0 0 20px #ec4899, 0 0 40px #ec4899;
+}
+
+.projection-content.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+.projection-content.empty {
+  color: rgba(255, 255, 255, 0.25);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem; /* Plus petit, discret et moderne */
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 3px; /* Espacement chic et haut de gamme */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.05);
+}
+
+.projection-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1;
+}
+
+.projection-subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  opacity: 0.8;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* La liste des résultats poussée à l'EXTÉRIEUR gauche de la scène */
+@keyframes slideInLeftPanel {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.search-dropdown-list-wrapper {
+  position: absolute;
+  top: 0;
+  left: -320px; /* Positionné à l'extérieur gauche */
+  width: 320px;
+  height: 100%;
+  z-index: 10;
+  /* Animation globale de glissement pour tout le bloc (liste + icône) */
+  animation: slideInLeftPanel 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Petite Clé de Sol miniature ROUGE fixée au-dessus de la scrollbar track */
+.scrollbar-music-header-icon {
+  position: absolute;
+  top: 2px; /* Rehaussé pour s'insérer magnifiquement au sommet */
+  right: 10px; /* Aligné précisément pour centrer l'icône de 18px sur le rail de 26px */
+  width: 18px; /* Agrandie pour une visibilité excellente */
+  height: 26px; /* Agrandie pour une visibilité excellente */
+  color: #ff1e56; /* Rouge néon ultra-vif et lumineux */
+  z-index: 25;
+  pointer-events: none; /* Ne bloque pas le défilement */
+  filter: drop-shadow(0 0 6px #ff1e56) drop-shadow(0 0 2px #ff1e56); /* Double halo lumineux rouge ultra-visible */
+}
+
+.search-dropdown-content {
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 1.5rem 0.6rem 1.5rem 1rem; /* Padding équilibré */
+  scrollbar-color: #e11d48 rgba(255, 255, 255, 0.03); /* Garantit la barre rouge premium douce nativement sur tous moteurs */
+  scrollbar-width: thin; /* Barre fine premium sur Firefox */
+  color: white;
+  z-index: 10;
+  /* Fond élégant qui s'accorde avec le thème */
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-right: none; /* Collé à l'image, pas besoin de bordure droite */
+  border-radius: 10px 0 0 10px; /* Arrondi sur la gauche uniquement */
+  box-shadow: -10px 10px 30px rgba(0,0,0,0.4);
+}
+
+/* --- Personnalisation Scrollbar Ultra-Chic & Premium (8px Rouge) --- */
+.search-dropdown-content::-webkit-scrollbar {
+  width: 8px; /* Largeur fine, ultra-moderne et élégante (comme sur macOS/iOS) */
+  display: block;
+}
+
+/* Le rail (Track) de défilement discret et élégant */
+.search-dropdown-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  margin: 10px 0;
+  border-radius: 4px;
+}
+
+[data-theme='light'] .search-dropdown-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* Le curseur (Thumb) est une magnifique barre rouge douce fine et vibrante */
+.search-dropdown-content::-webkit-scrollbar-thumb {
+  background: #e11d48; /* Rouge cerise élégant et doux */
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 0 4px rgba(225, 29, 72, 0.35);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-dropdown-content::-webkit-scrollbar-thumb:hover {
+  background: #f43f5e; /* Rose-rouge doux au survol */
+  box-shadow: 0 0 8px rgba(225, 29, 72, 0.6);
+}
+
+.search-dropdown-content::-webkit-scrollbar-thumb:active {
+  background: #fda4af;
+}
+
+[data-theme='light'] .search-dropdown-content::-webkit-scrollbar-thumb {
+  background: #db2777; /* Rose foncé chic en mode clair */
+  box-shadow: 0 0 3px rgba(219, 39, 119, 0.3);
+}
+
+[data-theme='light'] .search-dropdown-content::-webkit-scrollbar-thumb:hover {
+  background: #ec4899;
+}
+
+[data-theme='light'] .search-dropdown-container {
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.16), 0 0 25px rgba(236, 72, 153, 0.08);
+}
+
+.search-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: rgba(255, 255, 255, 0.6); /* Discret par défaut */
+  backdrop-filter: blur(2px);
+}
+
+.search-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.search-dropdown-item:hover, .search-dropdown-item.hovered-item {
+  color: white; /* S'allume au survol */
+  background: rgba(255, 255, 255, 0.1); 
+  transform: translateX(10px) scale(1.02);
+  border-color: transparent;
+  box-shadow: -5px 0px 0px #ec4899; /* Petite barre sur le côté */
+}
+
+[data-theme='light'] .search-dropdown-content {
+  color: #0f172a;
+}
+
+[data-theme='light'] .search-dropdown-item {
+  color: rgba(15, 23, 42, 0.7);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+[data-theme='light'] .search-dropdown-item:hover, [data-theme='light'] .search-dropdown-item.hovered-item {
+  color: #0f172a;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.search-dropdown-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* --- Navigation Supérieure Animation d'Entrée --- */
+.top-navigation-fixed {
+  animation: slideInTop 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* --- Squelette de chargement dans la liste --- */
+.search-dropdown-content.skeleton-loading {
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.skeleton-item {
+  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  opacity: 0.6;
+}
+
+.skeleton-text-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-title {
+  width: 70%;
+  height: 16px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-subtitle {
+  width: 45%;
+  height: 12px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-tag {
+  width: 60px;
+  height: 20px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet Shimmer (brillance de chargement) */
+.skeleton-title::after,
+.skeleton-subtitle::after,
+.skeleton-tag::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  animation: shimmer 1.5s infinite;
+  transform: translateX(-100%);
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+/* --- Projection de Recherche en cours (Égaliseur et texte) --- */
+.projection-content.loading-projection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.projection-equalizer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 4px;
+  height: 18px; /* Plus petit, discret et chic */
+  margin-bottom: 12px;
+}
+
+.projection-bar {
+  width: 3px; /* Plus fin */
+  height: 100%;
+  background: #ec4899;
+  border-radius: 2px;
+  animation: projectionEqualize 1s infinite alternate ease-in-out;
+  box-shadow: 0 0 6px rgba(236, 72, 153, 0.4); /* Halo lumineux discret */
+}
+
+.projection-bar:nth-child(1) { animation-delay: 0s; }
+.projection-bar:nth-child(2) { animation-delay: 0.2s; }
+.projection-bar:nth-child(3) { animation-delay: 0.4s; }
+.projection-bar:nth-child(4) { animation-delay: 0.1s; }
+.projection-bar:nth-child(5) { animation-delay: 0.3s; }
+
+@keyframes projectionEqualize {
+  0% { transform: scaleY(0.2); }
+  100% { transform: scaleY(1); }
+}
+
+.projection-title-loading {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem; /* Plus petit, équilibré et chic */
+  font-weight: 600; /* Moins épais */
+  letter-spacing: 3px;
+  color: #fff;
+  margin: 0;
+  text-shadow: 0 0 8px rgba(236, 72, 153, 0.3); /* Lueur adoucie */
+}
+
+.projection-subtitle-loading {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem; /* Plus compact */
+  opacity: 0.4; /* Très discret */
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* --- Projection d'Erreur (Style Neon Rouge) --- */
+.projection-content.error-projection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 90%;
+}
+
+.projection-title-error {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ef4444;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+}
+
+.projection-subtitle-error {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  opacity: 0.8;
+  color: #f87171;
+  margin-top: 5px;
+  line-height: 1.3;
+}
+
+.search-dropdown-subtitle {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.search-dropdown-tag {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(99, 102, 241, 0.2);
+  color: var(--accent-color);
+  border-radius: 1rem;
+  font-weight: 600;
+}
+
+/* --- SECTION FAVORIS DISCRÈTE --- */
+.premium-favorites-section-discreet {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+  margin-top: 1.5rem; /* Plus rapproché pour plus de discrétion */
+  animation: fadeIn 0.5s ease;
+}
+
+.favorites-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0.6;
+  color: var(--text-color);
+}
+
+.premium-favorites-list-discreet {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.premium-favorite-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(236, 72, 153, 0.06); /* Teinte rose ultra-discrète */
+  border: 1px solid rgba(236, 72, 153, 0.15);
+  padding: 0.4rem 0.8rem 0.4rem 0.9rem;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.premium-favorite-pill:hover {
+  background: rgba(236, 72, 153, 0.12);
+  border-color: rgba(236, 72, 153, 0.4);
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 10px rgba(236, 72, 153, 0.15);
+}
+
+.favorite-pill-icon {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.favorite-pill-name {
+  opacity: 0.9;
+}
+
+.delete-favorite-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  color: #f87171; /* Rouge doux premium */
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.delete-favorite-pill-btn:hover {
+  background: #ef4444; /* Rouge vif sur hover */
+  color: white;
+  transform: scale(1.15) rotate(90deg);
+}
+
+/* --- AVATAR MINIATURE DE L'ARTISTE --- */
+.artist-mini-avatar {
+  width: 42px; /* Super minuscule et élégant */
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35), 0 0 6px rgba(236, 72, 153, 0.15); /* Ombre fine et halo rose discret */
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+[data-theme='light'] .artist-mini-avatar {
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.artist-mini-avatar:hover {
+  transform: scale(1.15) rotate(8deg);
+  border-color: #ec4899;
+  box-shadow: 0 5px 12px rgba(236, 72, 153, 0.4);
 }
