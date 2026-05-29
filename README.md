@@ -54,4 +54,21 @@ npm run dev
 
 ---
 
+## 📸 Aperçu de l'Interface
+
+Voici quelques captures d'écran illustrant le design haut de gamme, les animations et l'expérience immersive de l'application :
+
+### 1. Écran d'Accueil Épuré (Effet Spotlight & Verre)
+![Écran d'Accueil](assets/1_accueil.png)
+
+### 2. Théâtre de Recherche & Écran Géant de Projection
+*Lorsque vous lancez une recherche, les résultats glissent sous forme de panneau latéral à gauche tandis que l'écran géant central projette les détails avec un halo de scène néon.*
+![Résultats de Recherche](assets/2_recherche.png)
+
+### 3. Fiche Artiste Complète & Carrousel de Discographie
+*La flèche de retour et le panneau d'actualités s'ajustent dynamiquement. La flèche reste collée de manière intelligente juste au-dessus du rectangle de l'album central actif.*
+![Détails et Discographie](assets/3_details.png)
+
+---
+
 *Note : Ce projet a été développé en collaboration et avec l'assistance d'agents d'Intelligence Artificielle de nouvelle génération.*
