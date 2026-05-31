@@ -40,6 +40,12 @@ export const getAlbumsArtiste = async (artistId) => {
 
 export const getChansonsAlbum = async (albumId) => {
     const res = await fetch(`${API_BASE}/albums/${albumId}/chansons`);
-    if (!res.ok) throw new Error("Erreur lors de la récupération de la tracklist");
+    if (!res.ok) throw new Error("Erreur lors de la récupération de l'tracklist");
+    return res.json();
+};
+
+export const getAnalyseIA = async (nomArtiste) => {
+    const res = await fetch(`${API_BASE}/ia/analyse/${encodeURIComponent(nomArtiste)}`);
+    if (!res.ok) throw new Error("Erreur lors de la récupération de l'analyse IA");
     return res.json();
 };

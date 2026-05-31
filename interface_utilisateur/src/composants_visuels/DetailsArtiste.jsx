@@ -6,6 +6,7 @@ import MessageErreur from './MessageErreur';
 import BoutonFavori from './BoutonFavori';
 import LecteurYoutube from './LecteurYoutube';
 import PanneauActualites from './PanneauActualites';
+import PanneauAnalyseIA from './PanneauAnalyseIA';
 
 const DetailsArtiste = ({ artiste, onRetour, albumASelectionnerInitial, onAlbumSelectionneVisualise }) => {
     const [albums, setAlbums] = useState([]);
@@ -185,6 +186,9 @@ const DetailsArtiste = ({ artiste, onRetour, albumASelectionnerInitial, onAlbumS
 
             {/* Panneau Actualités Intégré */}
             <PanneauActualites nomArtiste={artiste.nom} />
+
+            {/* Panneau d'Analyse IA par Gemini */}
+            <PanneauAnalyseIA nomArtiste={artiste.nom} />
 
             <div className="albums-section">
                 <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '1.5rem'}}>

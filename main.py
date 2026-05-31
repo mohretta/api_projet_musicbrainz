@@ -1,7 +1,7 @@
 # main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from points_acces_api import artistes, albums, chansons, actualites
+from points_acces_api import artistes, albums, chansons, actualites, ia
 
 app = FastAPI(
     title="API MusicBrainz",
@@ -23,6 +23,7 @@ app.include_router(artistes.router)
 app.include_router(albums.router)
 app.include_router(chansons.router)
 app.include_router(actualites.router)
+app.include_router(ia.router)
 
 @app.get("/")
 def racine():

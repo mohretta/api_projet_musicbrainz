@@ -69,6 +69,10 @@ Voici quelques captures d'écran illustrant le design haut de gamme, les animati
 *La flèche de retour et le panneau d'actualités s'ajustent dynamiquement. La flèche reste collée de manière intelligente juste au-dessus du rectangle de l'album central actif.*
 ![Détails et Discographie](assets/3_details.png)
 
+### 4. Analyse de Profil par l'IA Google Gemini (Nouveau ✨)
+*L'Intelligence Artificielle Google Gemini (modèle `gemini-2.5-flash-lite` intégré via une configuration .env ou parametres.py) analyse en temps réel le style unique de l'artiste, son impact historique, et extrait des anecdotes insolites directement au sein d'un panneau glassmorphism pliable.*
+![Analyse Profil par Gemini IA](assets/4_analyse_ia.png)
+
 ---
 
 *Note : Ce projet a été développé en collaboration et avec l'assistance d'agents d'Intelligence Artificielle de nouvelle génération.*
